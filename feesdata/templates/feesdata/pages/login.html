@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+</head>
+<body>
+
+<h1>
+    ADMIN LOGIN HERE
+</h1>
+
+<form method="post" action="{% url 'dashboard' %}">
+    {% csrf_token %}
+    Email <input name="user_Email" type="email">
+    Password <input name="user_password" type="password">
+    <input type="submit" value="Log in">
+</form>
+
+<a href="{% url 'signup' %}"> create an account</a>
+
+</body>
+</html>

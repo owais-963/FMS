@@ -1,0 +1,66 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <title>
+        TEST
+    </title>
+</head>
+<body>
+
+    <form method="post" action="{% url 'form' %}" id="n-form">
+        {% csrf_token %}
+        <input name="name" id="f-name">
+        <input type="file" id="f-file">
+
+        <input type="submit" value="submit">
+
+    </form>
+
+
+    <script>
+
+   const form=document.getElementById('n-form')
+   const name=document.getElementById('f-name')
+   const file=document.getElementById('f-file')
+
+   const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+   form.addEventListener('submit', e=>{
+       e.preventDefault()
+
+       const fd=new FormData();
+       fd.append('csrfmiddlewaretoken',csrftoken)
+       fd.append('name', name.value)
+       fd.append('img', file.value)
+
+       $.ajax({
+           type:'POST',
+           url: "{% url 'form' %}",
+           data: fd,
+           enctype: 'multipart/form-data',
+           success: function(response){
+                console.log(response)
+                var img = new Image()
+                img.src=response
+                var w = window.open("");
+                w.document.write(img.outerHTML);
+                },
+           error: function(error){
+                console.log(error)
+           },
+
+           cache: false,
+           contentType: false,
+           processData: false,
+
+
+       });
+
+
+   });
+
+</script>
+
+
+</body>
+</html>
